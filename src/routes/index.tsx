@@ -114,7 +114,7 @@ function Index() {
         </section>
 
         {/* PROJECTS */}
-        <Section id="projects" idx="01" title="Проекты" lead="Здесь появятся реальные работы. Пока — аккуратные места для будущих кейсов.">
+        <Section id="projects" idx="01" title="Проекты" lead="Несколько работ: инструмент для заведения, сайт ресторана и Telegram-бот.">
           <div className="grid gap-6 md:grid-cols-3">
             {projects.map((p, i) => (
               <article key={i} className="reveal group border border-border bg-card">
@@ -128,11 +128,15 @@ function Index() {
                   </div>
                   <h3 className="mt-5 font-display text-2xl">{p.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
-                  {p.url ? (
-                    <a href={p.url} target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4">Открыть проект →</a>
-                  ) : (
-                    <p className="index-label mt-5">Ссылка — скоро</p>
+                  {p.future && (
+                    <p className="mt-4 border-l border-border pl-3 text-xs leading-relaxed text-muted-foreground">
+                      <span className="index-label block">Возможное развитие</span>
+                      {p.future[0].toUpperCase() + p.future.slice(1)}
+                    </p>
                   )}
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4 hover:text-muted-foreground">
+                    {p.linkLabel} <span aria-hidden>↗</span>
+                  </a>
                 </div>
               </article>
             ))}
