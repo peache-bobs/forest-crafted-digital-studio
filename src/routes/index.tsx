@@ -71,8 +71,10 @@ export function Index() {
               </a>
             ))}
           </nav>
-          <button className="index-label md:hidden" aria-expanded={menu} aria-controls="mnav" onClick={() => setMenu(!menu)}>
-            {menu ? "Закрыть" : "Меню"}
+          <button type="button" className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-foreground transition-colors hover:bg-foreground/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground md:hidden" aria-label={menu ? "Закрыть меню" : "Открыть меню"} aria-expanded={menu} aria-controls="mnav" onClick={() => setMenu(!menu)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+              {menu ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
+            </svg>
           </button>
         </div>
         {menu && (
