@@ -54,7 +54,7 @@ function useReveal() {
   }, []);
 }
 
-function Index() {
+export function Index() {
   useReveal();
   const [menu, setMenu] = useState(false);
   return (
