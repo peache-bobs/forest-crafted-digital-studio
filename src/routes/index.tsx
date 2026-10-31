@@ -131,7 +131,7 @@ function Index() {
                   {p.future && (
                     <p className="mt-4 border-l border-border pl-3 text-xs leading-relaxed text-muted-foreground">
                       <span className="index-label block">Возможное развитие</span>
-                      {p.future[0].toUpperCase() + p.future.slice(1)}
+                      {p.future.charAt(0).toUpperCase() + p.future.slice(1)}
                     </p>
                   )}
                   <a href={p.url} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block text-sm underline underline-offset-4 hover:text-muted-foreground">
