@@ -6,9 +6,9 @@ import { projects, type ProjectKind } from "@/data/projects";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Разработка под задачу — сайты, боты и автоматизация" },
+      { title: "Fjord Studio — сайты, боты и автоматизация" },
       { name: "description", content: "Независимый разработчик: Telegram-боты, сайты, автоматизация ресторанов, интеграции, внутренние инструменты и AI-помощники." },
-      { property: "og:title", content: "Разработка под задачу — сайты, боты и автоматизация" },
+      { property: "og:title", content: "Fjord Studio — сайты, боты и автоматизация" },
       { property: "og:description", content: "Помогаю превратить идею в работающий инструмент: от Telegram-бота до системы управления заведением." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -62,7 +62,7 @@ export function Index() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-10">
           <a href="#top" className="font-display text-xl tracking-wide">
-            Разработка <span className="text-muted-foreground">/ под задачу</span>
+            Fjord <span className="text-muted-foreground">Studio</span>
           </a>
           <nav className="hidden gap-8 md:flex" aria-label="Основная навигация">
             {nav.map((n, i) => (
@@ -184,7 +184,7 @@ export function Index() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-2 px-5 py-8 md:flex-row md:px-10">
-          <span className="font-display text-lg">Разработка / под задачу</span>
+          <span className="font-display text-lg">Fjord Studio</span>
           <span className="index-label">Сайты · Боты · Автоматизация</span>
         </div>
       </footer>
