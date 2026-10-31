@@ -170,7 +170,12 @@ function Index() {
         </Section>
 
         {/* CONTACT */}
-        <Section id="contact" idx="04" title="Обсудим вашу задачу" lead="Контакт для связи скоро появится. А пока можно собрать короткий бриф — он пригодится для первого разговора.">
+        <Section id="contact" idx="04" title="Обсудим вашу задачу" lead="Напишите в Telegram, позвоните или отправьте бриф на почту — обсудим задачу и следующий шаг.">
+          <div className="mb-10 flex flex-wrap gap-5 text-sm">
+            <a href="https://t.me/peachesafkin" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">@peachesafkin ↗</a>
+            <a href="tel:+79166104877" className="underline underline-offset-4">+7 (916) 610-48-77</a>
+            <a href="mailto:peachesamsa@gmail.com" className="break-all underline underline-offset-4">peachesamsa@gmail.com</a>
+          </div>
           <Brief />
         </Section>
       </main>
@@ -260,34 +265,39 @@ function Mock({ kind }: { kind: ProjectKind }) {
 function Brief() {
   const [type, setType] = useState(briefTypes[0]);
   const [desc, setDesc] = useState("");
-  const [status, setStatus] = useState<"" | "ok" | "err" | "empty">("");
-
-  async function copy() {
-    if (!desc.trim()) return setStatus("empty");
-    const text = `Бриф\nТип проекта: ${type}\nОписание задачи:\n${desc.trim()}`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setStatus("ok");
-    } catch {
-      setStatus("err");
-    }
-    setTimeout(() => setStatus(""), 4000);
+  const [telegram, setTelegram] = useState("");
+  const [status, setStatus] = useState("");
+  function briefText() {
+    return `Бриф\nТип проекта: ${type}\nTelegram: @${telegram.trim().replace(/^@/, "")}\nОписание задачи:\n${desc.trim()}`;
+  }
+  function validate(form: HTMLFormElement) {
+    if (!form.reportValidity()) return false;
+    if (!desc.trim()) { setStatus("Опишите задачу, чтобы я мог предложить решение."); return false; }
+    return true;
   }
 
-  const msg = {
-    "": "Бриф никуда не отправляется — он только копируется в буфер обмена.",
-    ok: "Бриф скопирован в буфер обмена.",
-    err: "Не удалось скопировать. Выделите текст вручную.",
-    empty: "Опишите задачу хотя бы в паре предложений.",
-  }[status];
+  async function copy(form: HTMLFormElement) {
+    if (!validate(form)) return;
+    try {
+      await navigator.clipboard.writeText(briefText());
+      setStatus("Бриф скопирован. Отправьте его в Telegram или на почту.");
+    } catch {
+      setStatus("Не удалось скопировать. Скопируйте текст из полей вручную.");
+    }
+  }
 
   return (
     <div className="reveal grid gap-10 border border-border bg-card p-6 md:grid-cols-12 md:p-10">
       <div className="md:col-span-4">
         <span className="index-label">Мини-бриф</span>
-        <p className="mt-4 font-display text-2xl leading-snug">Тип проекта и пара фраз о задаче — этого достаточно для начала.</p>
+        <p className="mt-4 font-display text-2xl leading-snug">Расскажите о задаче и обязательно оставьте свой Telegram для ответа.</p>
       </div>
-      <div className="space-y-6 md:col-span-8">
+      <form className="space-y-6 md:col-span-8" onSubmit={(event) => {
+        event.preventDefault();
+        if (!validate(event.currentTarget)) return;
+        window.location.href = `mailto:peachesamsa@gmail.com?subject=${encodeURIComponent("Заявка с сайта: " + type)}&body=${encodeURIComponent(briefText())}`;
+        setStatus("Откроется почтовое приложение. Нажмите «Отправить» в нём. Если оно не открылось, скопируйте бриф и отправьте вручную.");
+      }}>
         <fieldset>
           <legend className="index-label mb-3">Тип проекта</legend>
           <div className="flex flex-wrap gap-2">
@@ -305,25 +315,37 @@ function Brief() {
           </div>
         </fieldset>
         <div>
+          <label htmlFor="telegram" className="index-label mb-3 block">Ваш Telegram — обязательно</label>
+          <input id="telegram" name="telegram" required pattern="@?[A-Za-z][A-Za-z0-9_]{3,31}" maxLength={33}
+            title="Введите Telegram username: 4–32 латинские буквы, цифры или подчёркивания, начиная с буквы. Знак @ необязателен."
+            value={telegram} onChange={(e) => { setTelegram(e.target.value); setStatus(""); }}
+            placeholder="@username" autoCapitalize="none" spellCheck={false}
+            className="w-full border border-input bg-background/60 p-4 text-sm focus:border-foreground focus:outline-none" />
+        </div>
+        <div>
           <label htmlFor="desc" className="index-label mb-3 block">Описание задачи</label>
           <textarea
             id="desc"
             rows={5}
+            required
+            maxLength={1500}
             value={desc}
-            onChange={(e) => { setDesc(e.target.value); if (status === "empty") setStatus(""); }}
+            onChange={(e) => { setDesc(e.target.value); setStatus(""); }}
             placeholder="Например: нужен бот для записи клиентов с напоминаниями…"
             className="w-full resize-y border border-input bg-background/60 p-4 text-sm placeholder:text-muted-foreground/70 focus:border-foreground focus:outline-none"
           />
         </div>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <button type="button" onClick={copy} className="bg-primary px-7 py-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-85">
+          <button type="submit" className="bg-primary px-7 py-4 text-sm font-medium text-primary-foreground hover:opacity-85">
+            Открыть письмо с брифом
+          </button>
+          <button type="button" onClick={(e) => { if (e.currentTarget.form) void copy(e.currentTarget.form); }} className="border border-border px-7 py-4 text-sm hover:border-foreground">
             Скопировать бриф
           </button>
-          <p role="status" aria-live="polite" className={`text-sm ${status === "ok" ? "text-foreground" : status === "err" || status === "empty" ? "text-destructive" : "text-muted-foreground"}`}>
-            {status === "ok" && "✓ "}{msg}
-          </p>
         </div>
-      </div>
+        <p className="text-sm text-muted-foreground">Письмо откроется в вашем почтовом приложении. Для отправки подтвердите его там. Можно также скопировать бриф и написать в Telegram.</p>
+        <p role="status" aria-live="polite" className="text-sm text-muted-foreground">{status}</p>
+      </form>
     </div>
   );
 }
