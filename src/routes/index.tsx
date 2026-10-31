@@ -93,16 +93,16 @@ function Index() {
           <div className="hero-veil absolute inset-0" />
           <Schematic />
           <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-32 md:px-10 md:pb-24">
-            <p className="index-label reveal mb-8">[ 00 ] Независимая разработка</p>
-            <h1 className="reveal font-display text-[2.6rem] font-medium leading-[1.02] tracking-tight sm:text-6xl lg:text-[5.5rem]">
+            <p className="index-label hero-in mb-8">[ 00 ] Независимая разработка</p>
+            <h1 className="hero-in font-display text-[2.6rem] font-medium leading-[1.02] tracking-tight sm:text-6xl lg:text-[5.5rem]">
               Сайты, боты и автоматизация.
               <br />
               <span className="text-muted-foreground italic">Под задачи вашего бизнеса.</span>
             </h1>
-            <p className="reveal mt-8 max-w-xl text-base font-light leading-relaxed md:text-lg">
+            <p className="hero-in mt-8 max-w-xl text-base font-light leading-relaxed md:text-lg">
               Помогаю превратить идею в работающий инструмент: от Telegram-бота до системы управления заведением.
             </p>
-            <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
+            <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row">
               <a href="#projects" className="inline-flex items-center justify-center gap-3 bg-primary px-7 py-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-85">
                 Смотреть проекты <span aria-hidden>↓</span>
               </a>
